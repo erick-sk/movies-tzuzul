@@ -1,10 +1,17 @@
-import { Box } from '@chakra-ui/react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './commponents/Home';
+import Signin from './commponents/Signin';
+import Signup from './commponents/Signup';
 
 function App() {
   return (
-    <Box bg="tomato" vw="100%">
-      <h1>Hello Movies!</h1>
-    </Box>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
+    </Router>
   );
 }
 
