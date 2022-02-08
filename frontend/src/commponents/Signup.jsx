@@ -4,75 +4,116 @@ import {
   Container,
   FormControl,
   FormLabel,
-  FormHelperText,
   Input,
   Button,
   Heading,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
 
-const Signup = () => {
+const SignUp = () => {
   return (
-    <Box>
-      <Heading m={8} align="center">
-        Signup
+    <Box minH="100vh" bg="gray.100" pb={8}>
+      <Heading py={8} align="center">
+        Sign Up
       </Heading>
-      <Container maxW="container.md">
+      <Container maxW="container.sm">
         <form>
-          <FormControl>
-            <FormLabel htmlFor="name">Your name</FormLabel>
-            <Input id="name" type="text" />
-            <FormHelperText>We'll never share your name.</FormHelperText>
+          <FormControl mb={4}>
+            <FormLabel htmlFor="firstName">Your first name</FormLabel>
+            <Input
+              outlineColor="blue.300"
+              focusBorderColor="none"
+              placeholder="your first name"
+              id="firstName"
+              type="text"
+            />
           </FormControl>
 
-          <FormControl>
+          <FormControl mb={4}>
             <FormLabel htmlFor="lastName">Your last name</FormLabel>
-            <Input id="lastName" type="text" />
-            <FormHelperText>We'll never share your last name.</FormHelperText>
+            <Input
+              outlineColor="blue.300"
+              focusBorderColor="none"
+              placeholder="your last name"
+              id="lastName"
+              type="text"
+            />
           </FormControl>
 
-          <FormControl>
+          <FormControl mb={4}>
             <FormLabel htmlFor="city">Your city</FormLabel>
-            <Input id="city" type="text" />
-            <FormHelperText>We'll never share your last city.</FormHelperText>
+            <Input
+              outlineColor="blue.300"
+              focusBorderColor="none"
+              placeholder="your city"
+              id="city"
+              type="text"
+            />
           </FormControl>
 
-          <FormControl>
+          <FormControl mb={4}>
             <FormLabel htmlFor="birthday">Your birthday</FormLabel>
-            <Input id="birthday" type="date" />
-            <FormHelperText>
-              We'll never share your last birthday.
-            </FormHelperText>
+            <Input
+              outlineColor="blue.300"
+              focusBorderColor="none"
+              id="birthday"
+              type="date"
+            />
           </FormControl>
 
-          <FormControl>
+          <FormControl mb={4}>
             <FormLabel htmlFor="email">Email address</FormLabel>
-            <Input id="email" type="email" />
-            <FormHelperText>We'll never share your email.</FormHelperText>
+            <Input
+              outlineColor="blue.300"
+              focusBorderColor="none"
+              placeholder="your email"
+              id="email"
+              type="email"
+            />
           </FormControl>
 
-          <FormControl>
+          <FormControl mb={4}>
             <FormLabel htmlFor="password">Password</FormLabel>
-            <Input id="password" type="password" />
-            <FormHelperText>We'll never share your password.</FormHelperText>
+            <Input
+              outlineColor="blue.300"
+              focusBorderColor="none"
+              placeholder="your password"
+              id="password"
+              type="password"
+            />
           </FormControl>
 
-          <FormControl>
-            <FormLabel htmlFor="password">Confirm password</FormLabel>
-            <Input id="confirmPassword" type="password" />
-            <FormHelperText>We'll never share your password.</FormHelperText>
+          <FormControl mb={6}>
+            <FormLabel htmlFor="confirmPassword">Confirm password</FormLabel>
+            <Input
+              outlineColor="blue.300"
+              focusBorderColor="none"
+              placeholder="Confirm your password"
+              id="confirmPassword"
+              type="password"
+            />
           </FormControl>
 
-          <Box mt={2} mb={2}>
-            <Link to="/signin">Signin</Link>
-          </Box>
-
-          <Button mt={2} colorScheme="blue">
-            Create account
+          <Button mb={4} w="100%" colorScheme="blue">
+            Sing Up
           </Button>
+
+          <Stack direction={['column', 'row']} lineHeight={0.5}>
+            <Text>Already have an account?</Text>
+            <Text
+              fontWeight="bold"
+              _hover={{
+                color: 'blue.500',
+              }}
+            >
+              <Link to="/signin">Log In!</Link>
+            </Text>
+          </Stack>
         </form>
       </Container>
     </Box>
   );
 };
 
-export default Signup;
+export default SignUp;
