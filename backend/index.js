@@ -8,6 +8,7 @@ connection();
 //importando rutas
 const movies = require('./routes/movies');
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 //usando rutas
 movies(app);
 users(app);
+auth(app);
 
 app.listen(config.port, () => {
   console.log('Server: http://localhost:' + config.port);
