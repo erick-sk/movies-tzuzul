@@ -1,25 +1,29 @@
 const express = require('express');
+const cookies = require('cookie-parser');
 const config = require('./config');
 
-//Trayendo conexión a BD
+// db connection
 const { connection } = require('./config/db');
 connection();
 
-//importando rutas
+//import routes
 const movies = require('./routes/movies');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
+// start express
 const app = express();
 
 //global middleware
 app.use(express.json());
+app.use(cookies());
 
-//usando rutas
+// use routes
 movies(app);
 users(app);
 auth(app);
 
+// server running
 app.listen(config.port, () => {
   console.log('Server: http://localhost:' + config.port);
 });
