@@ -1,15 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
+import Layout from './layout/Layout';
+import Home from './pages/Home';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Movies from './pages/Movies';
+import SeeMovie from './pages/SeeMovie';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />}></Route>
+        </Route>
+
         <Route path="/signin" element={<SignIn />} />
+
+        <Route path="/signup" element={<SignUp />} />
+
+        <Route path="/movies" element={<Layout />}>
+          <Route index element={<Movies />} />
+          <Route path=":id" element={<SeeMovie />} />
+        </Route>
       </Routes>
     </Router>
   );
