@@ -9,5 +9,78 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script type="script" src="/src/service/auth.js"></script>
+    <script>
+      const form = document.getElementById('form');
+      const statusElement = document.getElementById('status');
+      const fetchUser = document.getElementById('fetchUser');
+      const logoutButton = document.getElementById('logout');
+      const logoutButtonCookie = document.getElementById('logoutCookie');
+
+      function iniciarSesion() {
+        fetch('http://localhost:4002/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: form.email.value,
+            password: form.password.value,
+          }),
+          credentials: 'include',
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            localStorage.setItem('token', data.token);
+            statusElement.innerText = 'Sesión iniciada';
+            window.location.href = 'http://127.0.0.1:5500/Frontend/home.html';
+          });
+      }
+
+      if (localStorage.getItem('token')) {
+        statusElement.innerText = 'Sesión iniciada';
+      } else {
+        statusElement.innerText = 'Sin permisos';
+      }
+
+      form.onsubmit = (event) => {
+        event.preventDefault();
+        iniciarSesion();
+      };
+
+      fetchUser.onclick = () => {
+        fetch('http://localhost:4002/users', {
+          // headers:{
+          //     "Authorization":"Bearer "+localStorage.getItem("token")
+          // },
+          credentials: 'include',
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+      };
+
+      logoutButton.onclick = () => {
+        localStorage.removeItem('token');
+        statusElement.innerText = 'Sin permisos';
+      };
+
+      logoutButtonCookie.onclick = () => {
+        fetch('http://localhost:4002/auth/logout', {
+          // headers:{
+          //     "Authorization":"Bearer "+localStorage.getItem("token")
+          // },
+          method: 'POST',
+          //para que incluya mandar credenciales por cookies
+          credentials: 'include',
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            statusElement.innerText = 'Sin permisos';
+          });
+      };
+    </script>
   </body>
 </html>

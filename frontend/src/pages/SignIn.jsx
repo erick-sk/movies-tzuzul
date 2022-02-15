@@ -18,7 +18,7 @@ const SignIn = () => {
         Sign In
       </Heading>
       <Container maxW="container.sm">
-        <form>
+        <form id="form">
           <FormControl mb={4}>
             <FormLabel htmlFor="email">Email address</FormLabel>
             <Input

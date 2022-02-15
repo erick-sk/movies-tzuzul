@@ -1,5 +1,6 @@
 const express = require('express');
 const cookies = require('cookie-parser');
+const cors = require('cors');
 const config = require('./config');
 
 // db connection
@@ -17,6 +18,11 @@ const app = express();
 //global middleware
 app.use(express.json());
 app.use(cookies());
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 // use routes
 movies(app);
