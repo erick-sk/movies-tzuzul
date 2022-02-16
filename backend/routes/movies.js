@@ -7,6 +7,21 @@ function movies(app) {
   const moviesService = new Movies();
   app.use('/api/movies', router);
 
+  router.get('/premieres', async (req, res) => {
+    const movies = await moviesService.getPremieres();
+    return res.status(200).json(movies);
+  });
+
+  router.get('/popular', async (req, res) => {
+    const movies = await moviesService.getPopular();
+    return res.status(200).json(movies);
+  });
+
+  router.get('/unpopular', async (req, res) => {
+    const movies = await moviesService.getUnpopular();
+    return res.status(200).json(movies);
+  });
+
   router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const movie = await moviesService.get(id);
