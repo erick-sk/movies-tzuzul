@@ -1,10 +1,15 @@
 const express = require('express');
 const { isEditor } = require('../middleware/auth');
 const Movies = require('../services/movies');
+const Reviews = require('../services/reviews');
+
+const jwt = require('jsonwebtoken');
+const { jwt_secret } = require('../config');
 
 function movies(app) {
   const router = express.Router();
   const moviesService = new Movies();
+  const reviewsService = new Reviews();
   app.use('/api/movies', router);
 
   router.get('/premieres', async (req, res) => {
@@ -48,6 +53,24 @@ function movies(app) {
     const { id } = req.params;
     const movie = await moviesService.delete(id);
     return res.status(200).json(movie);
+  });
+
+  router.post('/:id', async (req, res) => {
+    const cookies = req.cookies;
+    const handleToken = cookies.token;
+    const token = handleToken;
+
+    const decoded = jwt.verify(token, jwt_secret);
+    req.user = decoded;
+
+    const dataReview = {
+      body: req.body.body,
+      creator: req.user.id,
+      movie: req.params.id,
+    };
+    const review = await reviewsService.createReview(dataReview);
+
+    return res.status(200).json(review);
   });
 }
 
