@@ -24,6 +24,21 @@ class Movies {
     const movie = await MovieModel.findByIdAndDelete(id);
     return movie;
   }
+
+  async getPremieres() {
+    const movies = await MovieModel.find().sort({ date: -1 });
+    return movies;
+  }
+
+  async getPopular() {
+    const movies = await MovieModel.find().sort({ rating: -1 });
+    return movies;
+  }
+
+  async getUnpopular() {
+    const movies = await MovieModel.find().sort({ rating: 1 });
+    return movies;
+  }
 }
 
 module.exports = Movies;
