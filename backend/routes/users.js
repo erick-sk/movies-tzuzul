@@ -27,13 +27,12 @@ function users(app) {
   router.put('/:id', isAdmin, async (req, res) => {
     const { id } = req.params;
     const user = await usersService.update(id, req.body);
-    // put: 200 o 204
     return res.status(200).json(user);
   });
+
   router.delete('/:id', isAdmin, async (req, res) => {
     const { id } = req.params;
     const user = await usersService.delete(id);
-    // delete: 200 o 202
     return res.status(200).json(user);
   });
 }
