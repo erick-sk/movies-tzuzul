@@ -24,7 +24,7 @@ class Auth {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        // role: user.role ? user.role : 1,
+        role: user.role ? user.role : 0,
       };
 
       const token = jwt.sign(data, jwt_secret, { expiresIn: '1d' });
@@ -37,14 +37,14 @@ class Auth {
     if (await this.users.getByEmail(userData.email)) {
       return { success: false, message: 'The user is already registered!' };
     } else {
-      userData.role = 1;
+      userData.role = 0;
       userData.password = await this.hashPassword(userData.password);
       const user = await this.users.create(userData);
       const data = {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        role: 0,
+        role: user.role,
       };
       const token = jwt.sign(data, jwt_secret, { expiresIn: '1d' });
       return { success: true, data, token };

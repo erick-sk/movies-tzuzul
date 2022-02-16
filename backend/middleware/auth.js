@@ -45,17 +45,17 @@ const verifyToken = (req, res, next) => {
 };
 
 const isRegular = (req, res, next) => {
-  req.neededRole = 1;
+  req.neededRole = 0;
   verifyToken(req, res, next);
 };
 
 const isEditor = (req, res, next) => {
-  req.neededRole = 2;
+  req.neededRole = 1;
   verifyToken(req, res, next);
 };
 
 const isAdmin = (req, res, next) => {
-  req.neededRole = 3;
+  req.neededRole = 2;
   verifyToken(req, res, next);
 };
 
