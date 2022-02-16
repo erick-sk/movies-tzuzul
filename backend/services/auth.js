@@ -21,6 +21,7 @@ class Auth {
     const correctPassword = await bcrypt.compare(password, user.password);
     if (user && correctPassword) {
       const data = {
+        id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
@@ -41,6 +42,7 @@ class Auth {
       userData.password = await this.hashPassword(userData.password);
       const user = await this.users.create(userData);
       const data = {
+        id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
