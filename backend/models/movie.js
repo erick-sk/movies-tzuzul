@@ -8,6 +8,7 @@ const movieSchema = new Schema({
   synopsis: String,
   urlSource: String,
   rating: Number,
+  creator: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 const MovieModel = mongoose.model('movies', movieSchema);
