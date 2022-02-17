@@ -39,20 +39,63 @@ function movies(app) {
   });
 
   router.post('/', isEditor, async (req, res) => {
-    const movie = await moviesService.create(req.body);
+    const cookies = req.cookies;
+    const handleToken = cookies.token;
+    const token = handleToken;
+
+    const decoded = jwt.verify(token, jwt_secret);
+    req.user = decoded;
+
+    const dataMovie = Object.assign(req.body, { creator: req.user.id });
+
+    const movie = await moviesService.create(dataMovie);
     return res.status(201).json(movie);
   });
 
   router.put('/:id', isEditor, async (req, res) => {
     const { id } = req.params;
-    const movie = await moviesService.update(id, req.body);
-    return res.status(200).json(movie);
+
+    const cookies = req.cookies;
+    const handleToken = cookies.token;
+    const token = handleToken;
+
+    const decoded = jwt.verify(token, jwt_secret);
+    req.user = decoded;
+
+    const movie = await moviesService.get(id);
+    const movieCreator = movie.creator.toString();
+
+    if (req.user.id === movieCreator) {
+      const movie = await moviesService.update(id, req.body);
+      return res.status(200).json(movie);
+    } else {
+      return res
+        .status(500)
+        .json({ message: 'Your are not the creator of this movie' });
+    }
   });
 
   router.delete('/:id', isEditor, async (req, res) => {
     const { id } = req.params;
-    const movie = await moviesService.delete(id);
-    return res.status(200).json(movie);
+
+    const cookies = req.cookies;
+    const handleToken = cookies.token;
+    const token = handleToken;
+
+    const decoded = jwt.verify(token, jwt_secret);
+    req.user = decoded;
+
+    const getMovie = await moviesService.get(id);
+    const movieCreator = getMovie.creator.toString();
+
+    if (req.user.id === movieCreator) {
+      const movie = await moviesService.delete(id);
+      return res.status(200).json(movie);
+    } else {
+      return res
+        .status(500)
+        .json({ message: 'Your are not the creator of this movie' });
+    }
   });
 
   router.post('/:id', async (req, res) => {
